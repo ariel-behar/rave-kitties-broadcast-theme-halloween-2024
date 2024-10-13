@@ -1,0 +1,77 @@
+@font-face {
+  font-family: Montserrat;
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url("//ravekitties.com/cdn/fonts/montserrat/montserrat_n4.1d581f6d4bf1a97f4cbc0b88b933bc136d38d178.woff2?h1=YTllNmY3LmFjY291bnQubXlzaG9waWZ5LmNvbQ&h2=cmF2ZWtpdHRpZXMubXlzaG9waWZ5LmNvbQ&h3=cmF2ZWtpdHRpZXMuY29t&hmac=e0f7978cc16d4f10ae9ad364ac19bc6f762e171aa33c3826165b754735dc6e84") format("woff2"),
+       url("//ravekitties.com/cdn/fonts/montserrat/montserrat_n4.cfce41a967758ce5a9b7d48daeb5b028fd977a9b.woff?h1=YTllNmY3LmFjY291bnQubXlzaG9waWZ5LmNvbQ&h2=cmF2ZWtpdHRpZXMubXlzaG9waWZ5LmNvbQ&h3=cmF2ZWtpdHRpZXMuY29t&hmac=4c652883825decdc8673d3534f6f03e565fb4aa38f76584ce6c1fad10eb030f4") format("woff");
+}
+
+@font-face {
+  font-family: Montserrat;
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url("//ravekitties.com/cdn/fonts/montserrat/montserrat_n4.1d581f6d4bf1a97f4cbc0b88b933bc136d38d178.woff2?h1=YTllNmY3LmFjY291bnQubXlzaG9waWZ5LmNvbQ&h2=cmF2ZWtpdHRpZXMubXlzaG9waWZ5LmNvbQ&h3=cmF2ZWtpdHRpZXMuY29t&hmac=e0f7978cc16d4f10ae9ad364ac19bc6f762e171aa33c3826165b754735dc6e84") format("woff2"),
+       url("//ravekitties.com/cdn/fonts/montserrat/montserrat_n4.cfce41a967758ce5a9b7d48daeb5b028fd977a9b.woff?h1=YTllNmY3LmFjY291bnQubXlzaG9waWZ5LmNvbQ&h2=cmF2ZWtpdHRpZXMubXlzaG9waWZ5LmNvbQ&h3=cmF2ZWtpdHRpZXMuY29t&hmac=4c652883825decdc8673d3534f6f03e565fb4aa38f76584ce6c1fad10eb030f4") format("woff");
+}
+
+@font-face {
+  font-family: "Avenir Next";
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url("//ravekitties.com/cdn/fonts/avenir_next/avenirnext_n4.7fd0287595be20cd5a683102bf49d073b6abf144.woff2?h1=YTllNmY3LmFjY291bnQubXlzaG9waWZ5LmNvbQ&h2=cmF2ZWtpdHRpZXMubXlzaG9waWZ5LmNvbQ&h3=cmF2ZWtpdHRpZXMuY29t&hmac=e18cd62b266783dd031fce817694f1571cbd30997c559c915ddf4330c41b8b6b") format("woff2"),
+       url("//ravekitties.com/cdn/fonts/avenir_next/avenirnext_n4.a26a334a0852627a5f36b195112385b0cd700077.woff?h1=YTllNmY3LmFjY291bnQubXlzaG9waWZ5LmNvbQ&h2=cmF2ZWtpdHRpZXMubXlzaG9waWZ5LmNvbQ&h3=cmF2ZWtpdHRpZXMuY29t&hmac=2b2604edba2ca4ef37d3d68a2c39026696d443b6856998d239dcbd22dfc02f16") format("woff");
+}
+
+
+
+  @font-face {
+  font-family: Montserrat;
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+  src: url("//ravekitties.com/cdn/fonts/montserrat/montserrat_n5.e72d00d31ae5399d260a80ec70322c62c1819762.woff2?h1=YTllNmY3LmFjY291bnQubXlzaG9waWZ5LmNvbQ&h2=cmF2ZWtpdHRpZXMubXlzaG9waWZ5LmNvbQ&h3=cmF2ZWtpdHRpZXMuY29t&hmac=68e23b464312dc928a4ec155fbd47d7ef37495b6edf297535de3f2d58f0b9590") format("woff2"),
+       url("//ravekitties.com/cdn/fonts/montserrat/montserrat_n5.18a018b6c83e89030c5d70a6d4c02c969f228500.woff?h1=YTllNmY3LmFjY291bnQubXlzaG9waWZ5LmNvbQ&h2=cmF2ZWtpdHRpZXMubXlzaG9waWZ5LmNvbQ&h3=cmF2ZWtpdHRpZXMuY29t&hmac=6f77e8ffbb5a73535376070cc22a948cd277fc7ed67d29de2bf18d240226953d") format("woff");
+}
+
+
+
+
+  @font-face {
+  font-family: Montserrat;
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+  src: url("//ravekitties.com/cdn/fonts/montserrat/montserrat_n5.e72d00d31ae5399d260a80ec70322c62c1819762.woff2?h1=YTllNmY3LmFjY291bnQubXlzaG9waWZ5LmNvbQ&h2=cmF2ZWtpdHRpZXMubXlzaG9waWZ5LmNvbQ&h3=cmF2ZWtpdHRpZXMuY29t&hmac=68e23b464312dc928a4ec155fbd47d7ef37495b6edf297535de3f2d58f0b9590") format("woff2"),
+       url("//ravekitties.com/cdn/fonts/montserrat/montserrat_n5.18a018b6c83e89030c5d70a6d4c02c969f228500.woff?h1=YTllNmY3LmFjY291bnQubXlzaG9waWZ5LmNvbQ&h2=cmF2ZWtpdHRpZXMubXlzaG9waWZ5LmNvbQ&h3=cmF2ZWtpdHRpZXMuY29t&hmac=6f77e8ffbb5a73535376070cc22a948cd277fc7ed67d29de2bf18d240226953d") format("woff");
+}
+
+
+
+
+
+
+
+  @font-face {
+  font-family: Montserrat;
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+  src: url("//ravekitties.com/cdn/fonts/montserrat/montserrat_i4.ae02483b3d5e8777d0d4a4ccf396482c364d8955.woff2?h1=YTllNmY3LmFjY291bnQubXlzaG9waWZ5LmNvbQ&h2=cmF2ZWtpdHRpZXMubXlzaG9waWZ5LmNvbQ&h3=cmF2ZWtpdHRpZXMuY29t&hmac=0737edff13efb68d3adfb2a0abcb239d9b5b96f95b33b7c4c10f247f66d93083") format("woff2"),
+       url("//ravekitties.com/cdn/fonts/montserrat/montserrat_i4.ba28d1a04ec09448de486d83c63235903dfc0af8.woff?h1=YTllNmY3LmFjY291bnQubXlzaG9waWZ5LmNvbQ&h2=cmF2ZWtpdHRpZXMubXlzaG9waWZ5LmNvbQ&h3=cmF2ZWtpdHRpZXMuY29t&hmac=8431f183b3ed1efe6d3a2581384608e9a7ed5b7109e3b76f83ab2a3ecb3d443b") format("woff");
+}
+
+
+
+
+  @font-face {
+  font-family: Montserrat;
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+  src: url("//ravekitties.com/cdn/fonts/montserrat/montserrat_i5.3a4750a300f30824a43384268712b76e0a04be8c.woff2?h1=YTllNmY3LmFjY291bnQubXlzaG9waWZ5LmNvbQ&h2=cmF2ZWtpdHRpZXMubXlzaG9waWZ5LmNvbQ&h3=cmF2ZWtpdHRpZXMuY29t&hmac=795387f38c266b037e51be4ab52f6be038efad344e52e258e0957673bf42aa2f") format("woff2"),
+       url("//ravekitties.com/cdn/fonts/montserrat/montserrat_i5.3c586d8884de1ac5627138711567f5b454adbef8.woff?h1=YTllNmY3LmFjY291bnQubXlzaG9waWZ5LmNvbQ&h2=cmF2ZWtpdHRpZXMubXlzaG9waWZ5LmNvbQ&h3=cmF2ZWtpdHRpZXMuY29t&hmac=18f3ec71b42bb512fe9a3375497f647594e4a876375f91140894d56ad2abbe5c") format("woff");
+}
+
