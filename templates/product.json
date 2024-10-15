@@ -90,7 +90,7 @@
             "input_font_weight": 400,
             "input_color": "#000",
             "calendar_stroke_color": "#555",
-            "input_placeholder": "As Soon As Possible (selected)"
+            "input_placeholder": "Select a date"
           }
         },
         "icon_1": {
