@@ -158,6 +158,13 @@
         "disabled": false,
         "settings": {
         }
+      },
+      "10077418179866729617": {
+        "type": "shopify://apps/hidepay/blocks/hidepay-frontend/ced40b5a-eb19-49dc-a57f-5e5a6bca7bf9",
+        "disabled": false,
+        "settings": {
+          "drawerId": "additional-checkout-buttons"
+        }
       }
     }
   },
