@@ -77,7 +77,7 @@
             "product": "{{product}}",
             "gap_bottom": 5,
             "gap_top": 5,
-            "date_selector_label": "Select a delivery date",
+            "date_selector_label": "Select a preferred delivery date",
             "date_selector_label_font_size": 15,
             "date_selector_label_font_weight": 400,
             "date_selector_label_color": "#000000",
