@@ -152,6 +152,12 @@
           "pagination": "",
           "custom_css": ""
         }
+      },
+      "3569375161408386233": {
+        "type": "shopify://apps/delivery-pickup-edp/blocks/otd-block/f1383932-76e6-410b-b861-75ee80486672",
+        "disabled": false,
+        "settings": {
+        }
       }
     }
   },
