@@ -153,12 +153,6 @@
           "custom_css": ""
         }
       },
-      "3569375161408386233": {
-        "type": "shopify://apps/delivery-pickup-edp/blocks/otd-block/f1383932-76e6-410b-b861-75ee80486672",
-        "disabled": false,
-        "settings": {
-        }
-      },
       "10077418179866729617": {
         "type": "shopify://apps/hidepay/blocks/hidepay-frontend/ced40b5a-eb19-49dc-a57f-5e5a6bca7bf9",
         "disabled": false,
