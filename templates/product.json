@@ -71,28 +71,6 @@
             "padding_bottom": 16
           }
         },
-        "flare_future_date_delivery_flare_add_to_cart_qqwCGh": {
-          "type": "shopify://apps/flare-future-date-delivery/blocks/flare_add_to_cart/6aba17cb-0d38-4558-a192-544ecffccc2e",
-          "settings": {
-            "product": "{{product}}",
-            "gap_bottom": 5,
-            "gap_top": 5,
-            "date_selector_label": "Select a preferred delivery date",
-            "date_selector_label_font_size": 15,
-            "date_selector_label_font_weight": 400,
-            "date_selector_label_color": "#000000",
-            "label_gap": 5,
-            "border_color": "#A5A5A5",
-            "border_width": 1,
-            "border_radius": 8,
-            "padding": 4,
-            "input_font_size": 15,
-            "input_font_weight": 400,
-            "input_color": "#000",
-            "calendar_stroke_color": "#555",
-            "input_placeholder": "Select a date"
-          }
-        },
         "icon_1": {
           "type": "icon",
           "settings": {
@@ -167,7 +145,6 @@
         "popup_eNhUxf",
         "variants",
         "buttons",
-        "flare_future_date_delivery_flare_add_to_cart_qqwCGh",
         "icon_1",
         "icon_2",
         "icon_JMLT7V",
