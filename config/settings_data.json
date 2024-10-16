@@ -160,8 +160,8 @@
           "drawerId": "additional-checkout-buttons"
         }
       },
-      "410654874852735521": {
-        "type": "shopify://apps/fordeer-product-labels/blocks/badge/6efba0f5-50fb-446d-8a52-da07098aad0c",
+      "16216491870256628967": {
+        "type": "shopify://apps/bss-labels-badges/blocks/bss-pl-config-data/91bfe765-b604-49a1-805e-3599fa600b24",
         "disabled": false,
         "settings": {
         }
