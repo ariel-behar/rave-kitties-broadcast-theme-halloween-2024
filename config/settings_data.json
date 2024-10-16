@@ -159,6 +159,12 @@
         "settings": {
           "drawerId": "additional-checkout-buttons"
         }
+      },
+      "410654874852735521": {
+        "type": "shopify://apps/fordeer-product-labels/blocks/badge/6efba0f5-50fb-446d-8a52-da07098aad0c",
+        "disabled": false,
+        "settings": {
+        }
       }
     }
   },
