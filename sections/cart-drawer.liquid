@@ -197,7 +197,11 @@
       </div>
 
       <em class="cart__note">
+       {% if localization.country.iso_code == 'US' %}
+        Pricing includes all duties and tariffs. Discount codes are applied at checkout.
+        {% else %}
         {{- 'cart.general.subtotal_note' | t -}}
+        {% endif %}
       </em>
     </div>
   </form>
