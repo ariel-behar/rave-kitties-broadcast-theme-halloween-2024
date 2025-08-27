@@ -156,7 +156,13 @@
       {{- subtotal | money_with_currency -}}
     {%- endif -%}
   </span>
-
+  <em class="cart__note">
+       {% if localization.country.iso_code == 'US' %}
+        Pricing includes all duties and tariffs. Discount codes are applied at checkout.
+        {% else %}
+        {{- 'cart.general.subtotal_note' | t -}}
+        {% endif %}
+      </em>
   <div class="cart__price__loader loader"><div class="loader-indeterminate"></div></div>
 </div>
       </div>
@@ -196,13 +202,7 @@
         {%- endif -%}
       </div>
 
-      <em class="cart__note">
-       {% if localization.country.iso_code == 'US' %}
-        Pricing includes all duties and tariffs. Discount codes are applied at checkout.
-        {% else %}
-        {{- 'cart.general.subtotal_note' | t -}}
-        {% endif %}
-      </em>
+      
     </div>
   </form>
 {%- endcapture -%}
