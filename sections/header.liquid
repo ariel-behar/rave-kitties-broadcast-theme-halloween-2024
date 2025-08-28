@@ -273,6 +273,11 @@
 {%- endcapture -%}
 
 {%- capture utilities -%}
+  {%- if languages or countries -%}
+      <div class="toolbar__utility">
+        {%- render 'localization' unique: block.id, show_locale_selector: show_locale_selector, show_country_selector: show_country_selector, show_country_flag: show_country_flag, show_country_name: show_country_name, class: 'header' -%}
+      </div>
+    {%- endif -%}
   {%- if show_utilities -%}
     {%- if show_toolbar_socials -%}
       <div class="toolbar__utility">
@@ -284,11 +289,7 @@
       {{ gift_card_link }}
     {%- endif -%}
 
-    {%- if languages or countries -%}
-      <div class="toolbar__utility">
-        {%- render 'localization' unique: block.id, show_locale_selector: show_locale_selector, show_country_selector: show_country_selector, show_country_flag: show_country_flag, show_country_name: show_country_name, class: 'header' -%}
-      </div>
-    {%- endif -%}
+    
   {%- endif -%}
 {%- endcapture -%}
 
