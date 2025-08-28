@@ -16966,6 +16966,7 @@ popout-select {
   font-weight: inherit;
   text-transform: inherit;
   letter-spacing: inherit;
+  font-size: 12px;
 }
 
 .popout-header .popout__toggle .icon {
