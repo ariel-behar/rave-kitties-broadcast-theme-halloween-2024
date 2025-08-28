@@ -1,34 +1,9 @@
-<!-- /snippets/localization.liquid -->
-{% comment %}
-    Renders language and currency popouts in Header, Toolbar and Footer
-
-    Accepts:
-    - class: {String} Class name (optional)
-    - show_locale_selector: {Boolean} True or false
-    - show_country_selector: {Boolean} True or false
-    - show_country_flag: {Boolean} True or false
-    - show_country_name: {Boolean} True or false
-    - unique: {String} Unique id - section.id or block.id
-    - show_icon: {Boolean} True or false
-
-    Usage:
-    {% render 'localization',
-        class: class,
-        show_locale_selector: show_locale_selector,
-        show_country_selector: show_country_selector,
-        show_country_flag: show_country_flag,
-        show_country_name: show_country_name,
-        unique: section.id,
-        show_icon: show_icon,
-      %}
-{% endcomment %}
-
 {%- liquid
   assign class = class | default: 'default'
   assign parent_class = 'popout-' | append: class
   assign unique = unique | default: 'localization'
   assign form_id = 'localization-form-' | append: unique
-  assign show_icon = show_icon | default: false
+  assign show_icon = show_icon | default: true
   assign languages = false
   assign countries = false
   assign show_locale_selector = show_locale_selector | default: false
@@ -43,10 +18,13 @@
   if show_country_selector and localization.available_countries.size > 1
     assign countries = true
   endif
+
+  assign priority_countries = "" | split: ","
 -%}
 
 {%- if languages or countries -%}
   {%- form 'localization', class: parent_class, id: form_id -%}
+
     {%- if languages -%}
       <div class="{{ parent_class }}__holder">
         <h2 class="visually-hidden" id="lang-heading-{{ unique }}">
@@ -67,15 +45,15 @@
             {%- for language in localization.available_languages -%}
               <li class="popout-list__item{% if language.iso_code == localization.language.iso_code %} is-active{% endif %}">
                 <a class="popout-list__option"
-                  href="#"
-                  hreflang="{{ language.iso_code }}"
-                  lang="{{ language.iso_code }}"
-                  {% if language.iso_code == localization.language.iso_code %}
-                    aria-current="true"
-                  {% endif %}
-                  data-value="{{ language.iso_code }}"
-                  data-popout-option>
-                  <span>{{ language.endonym_name }}</span>
+                   href="#"
+                   hreflang="{{ language.iso_code }}"
+                   lang="{{ language.iso_code }}"
+                   {% if language.iso_code == localization.language.iso_code %}
+                     aria-current="true"
+                   {% endif %}
+                   data-value="{{ language.iso_code }}"
+                   data-popout-option>
+                   <span>{{ language.endonym_name }}</span>
                 </a>
               </li>
             {%- endfor -%}
@@ -87,66 +65,101 @@
     {%- endif -%}
 
     {%- if countries -%}
-      {%- capture currency -%}
-        {{- localization.country.currency.iso_code }}
-        {{ localization.country.currency.symbol -}}
-      {%- endcapture -%}
+  {%- capture currency -%}
+    {{- localization.country.currency.iso_code }}
+    {{ localization.country.currency.symbol -}}
+  {%- endcapture -%}
 
-      <div class="{{ parent_class }}__holder">
-        <h2 class="visually-hidden" id="country-heading-{{ unique }}">
-          {{ 'layout.footer.currency' | t }}
-        </h2>
+  <div class="{{ parent_class }}__holder">
+    <h2 class="visually-hidden" id="country-heading-{{ unique }}">
+      {{ 'layout.footer.currency' | t }}
+    </h2>
 
-        <popout-select class="popout" submit>
-          <button type="button" class="popout__toggle" aria-expanded="false" aria-controls="country-list-{{ unique }}" aria-describedby="country-heading-{{ unique }}" data-popout-toggle>
-            <span class="popout__toggle__text" data-popout-toggle-text>
-              {%- if show_country_flag -%}
-                {{ localization.country | image_url: width: 40 | image_tag: loading: 'lazy', class: 'popout__flag' }}
-              {%- endif -%}
+    <popout-select class="popout" submit>
+      <button type="button" class="popout__toggle" aria-expanded="false" aria-controls="country-list-{{ unique }}" aria-describedby="country-heading-{{ unique }}" data-popout-toggle>
+        <span class="popout__toggle__text" data-popout-toggle-text>
+          {%- if show_country_flag -%}
+            {{ localization.country | image_url: width: 40 | image_tag: loading: 'lazy', class: 'popout__flag' }}
+          {%- endif -%}
 
-              {%- if show_country_name -%}
-                {{ localization.country.name }}
+          {%- if show_country_name -%}
+            {{ localization.country.iso_code }} | {{ currency }}
+          {%- else -%}
+            {{ currency }}
+          {%- endif -%}
+        </span>
+        {%- if show_icon -%}
+          {%- render 'icon-nav-arrow-down' -%}
+        {%- endif -%}
+      </button>
 
-                ({{ currency }})
-              {%- else -%}
-                {{ currency }}
-              {%- endif -%}
-            </span>
-            {%- if show_icon -%}
-              {%- render 'icon-nav-arrow-down' -%}
-            {%- endif -%}
-          </button>
+      <ul id="country-list-{{ unique }}" class="popout-list" data-popout-list data-scroll-lock-scrollable>
 
-          <ul id="country-list-{{ unique }}" class="popout-list" data-popout-list data-scroll-lock-scrollable>
+        {%- comment -%} 1. Current selected/geo country {%- endcomment -%}
+        {%- for country in localization.available_countries -%}
+          {%- if country.iso_code == localization.country.iso_code -%}
+            <li class="popout-list__item is-active">
+              <a class="popout-list__option"
+                 href="#"
+                 aria-current="true"
+                 data-value="{{ country.iso_code }}"
+                 data-popout-option>
+                {%- if show_country_flag -%}
+                  {{ country | image_url: width: 40 | image_tag: loading: 'lazy', class: 'popout__flag' }}
+                {%- endif -%}
+                <span>{{ country.name }} ({{ country.currency.iso_code }} {{ country.currency.symbol }})</span>
+              </a>
+            </li>
+          {%- endif -%}
+        {%- endfor -%}
+{% comment %}US,DE,NL{% endcomment %}
+        {%- assign priority_countries = "" | split: "," -%}
+
+        {%- comment -%} 2. Priority countries {%- endcomment -%}
+        {%- for code in priority_countries -%}
+          {%- if code != localization.country.iso_code -%}
             {%- for country in localization.available_countries -%}
-              <li class="popout-list__item{% if country.iso_code == localization.country.iso_code %} is-active{% endif %}">
-                <a
-                  class="popout-list__option"
-                  href="#"
-                  {% if country.iso_code == localization.country.iso_code %}
-                    aria-current="true"
-                  {% endif %}
-                  data-value="{{ country.iso_code }}"
-                  data-popout-option>
-                  {%- if show_country_flag -%}
-                    {{ country | image_url: width: 40 | image_tag: loading: 'lazy', class: 'popout__flag' }}
-                  {%- endif -%}
-
-                  <span>
-                    {{ country.name }}
-
-                    ({{ country.currency.iso_code }}
-                    {{ country.currency.symbol }})
-                  </span>
-                </a>
-              </li>
+              {%- if country.iso_code == code -%}
+                <li class="popout-list__item">
+                  <a class="popout-list__option"
+                     href="#"
+                     data-value="{{ country.iso_code }}"
+                     data-popout-option>
+                    {%- if show_country_flag -%}
+                      {{ country | image_url: width: 40 | image_tag: loading: 'lazy', class: 'popout__flag' }}
+                    {%- endif -%}
+                    <span>{{ country.name }} ({{ country.currency.iso_code }} {{ country.currency.symbol }})</span>
+                  </a>
+                </li>
+              {%- endif -%}
             {%- endfor -%}
-          </ul>
+          {%- endif -%}
+        {%- endfor -%}
 
-          <input type="hidden" name="country_code" id="CountrySelector-{{ unique }}" value="{{ localization.country.iso_code }}" data-popout-input>
-        </popout-select>
-      </div>
-    {%- endif -%}
+        {%- comment -%} 3. Other countries {%- endcomment -%}
+        {%- for country in localization.available_countries -%}
+          {%- unless country.iso_code == localization.country.iso_code or priority_countries contains country.iso_code -%}
+            <li class="popout-list__item">
+              <a class="popout-list__option"
+                 href="#"
+                 data-value="{{ country.iso_code }}"
+                 data-popout-option>
+                {%- if show_country_flag -%}
+                  {{ country | image_url: width: 40 | image_tag: loading: 'lazy', class: 'popout__flag' }}
+                {%- endif -%}
+                <span>{{ country.name }} ({{ country.currency.iso_code }} {{ country.currency.symbol }})</span>
+              </a>
+            </li>
+          {%- endunless -%}
+        {%- endfor -%}
+
+      </ul>
+
+      <input type="hidden" name="country_code" id="CountrySelector-{{ unique }}" value="{{ localization.country.iso_code }}" data-popout-input>
+    </popout-select>
+  </div>
+{%- endif -%}
+
 
   {%- endform -%}
 {%- endif -%}
