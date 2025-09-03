@@ -178,11 +178,6 @@
           "drawerId": "additional-checkout-buttons"
         }
       },
-      "16216491870256628967": {
-        "type": "shopify://apps/bss-labels-badges/blocks/bss-pl-config-data/91bfe765-b604-49a1-805e-3599fa600b24",
-        "disabled": false,
-        "settings": {}
-      },
       "234697707474025726": {
         "type": "shopify://apps/analyzify-ga4-ads-tracking/blocks/app-embed-v4/69637cfd-dd6f-4511-aa97-7037cfb5515c",
         "disabled": false,
@@ -193,21 +188,10 @@
         "disabled": true,
         "settings": {}
       },
-      "5059203847231188605": {
-        "type": "shopify://apps/smart-product-filter-search/blocks/app-embed/5cc1944c-3014-4a2a-af40-7d65abc0ef73",
-        "disabled": true,
-        "settings": {
-          "productGridSelector": "",
-          "useCustomQuickviewTemplate": false,
-          "customJs": "",
-          "customCss": "",
-          "customProductTemplateLoader": "{%- capture productTemplate -%}{% render 'globo.filter.product', themeTranslation: shop.metafields.globoFilter.themeTranslation.value[request.locale.iso_code] %}{%- endcapture -%}{%- unless productTemplate contains 'Liquid error' -%}<script id=\"gspfProduct\" type=\"template/html\">{{- productTemplate | replace: \"script>\", \"scripttag>\" -}}</script>{%- endunless -%}",
-          "customTreeTemplateLoader": "{%- capture treeTemplate -%}{% render 'globo.filter.tree' %}{%- endcapture -%}{%- unless treeTemplate contains 'Liquid error' -%}<script id=\"gspfFilterTree\" type=\"template/html\">{{- treeTemplate | replace: \"script>\", \"scripttag>\" -}}</script>{%- endunless -%}",
-          "customSortTemplateLoader": "{%- capture sortTemplate -%}{% render 'globo.filter.sort' %}{%- endcapture -%}{%- unless sortTemplate contains 'Liquid error' -%}<script id=\"gspfFilterSort\" type=\"template/html\">{{- sortTemplate | replace: \"script>\", \"scripttag>\" -}}</script>{%- endunless -%}",
-          "customSearchTemplateLoader": "{%- capture searchTemplate -%}{% render 'globo.filter.search' %}{%- endcapture -%}{%- unless searchTemplate contains 'Liquid error' -%}<script id=\"gspfSearchResult\" type=\"template/html\">{{- searchTemplate | replace: \"script>\", \"scripttag>\" -}}</script>{%- endunless -%}",
-          "customPaginationTemplateLoader": "{%- capture paginationTemplate -%}{% render 'globo.filter.pagination' %}{%- endcapture -%}{%- unless paginationTemplate contains 'Liquid error' -%}<script id=\"gspfPagination\" type=\"template/html\">{{- paginationTemplate | replace: \"script>\", \"scripttag>\" -}}</script>{%- endunless -%}",
-          "customYMMTemplateLoader": "{%- capture YMMTemplate -%}{% render 'globo.filter.form' %}{%- endcapture -%}{%- unless YMMTemplate contains 'Liquid error' -%}<script id=\"gspfForm\" type=\"template/html\">{{- YMMTemplate | replace: \"script>\", \"scripttag>\" -}}</script>{%- endunless -%}"
-        }
+      "17453258828962521766": {
+        "type": "shopify://apps/captain-protection/blocks/app/a7ef2f88-bc96-4a68-ba4e-f042ccbc8beb",
+        "disabled": false,
+        "settings": {}
       }
     }
   },
