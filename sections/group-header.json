@@ -18,6 +18,7 @@
           "type": "text",
           "settings": {
             "text": "<p>BUY ONE, GET ONE 50% OFF! CODE BOGO50</p>",
+            "text_us": "<p>PRICE INCLUDE ALL DUTIES & TARIFFS</p>",
             "target_url_enabled": false,
             "target_url": "",
             "target_referrer_enabled": false,
@@ -33,6 +34,7 @@
       "settings": {
         "show_border": false,
         "layout": "marquee",
+        "us_disable_marquee": true,
         "slider_speed": 8,
         "text_alignment": "center",
         "show_arrows": false,
