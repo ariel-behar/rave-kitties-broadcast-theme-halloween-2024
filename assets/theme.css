@@ -24489,3 +24489,4 @@ footer .supporting-menu {
 	  padding: 10px;
 	}
   }
+  strong.timer__digit { min-width: 19px; }
