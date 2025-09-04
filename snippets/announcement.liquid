@@ -28,6 +28,36 @@
   assign announcement_height = 'max(calc(var(--font-' | append: text_size | append: ') * var(--FONT-ADJUST-BODY) * var(--line-height-normal)), 36px)'
 -%}
 
+{%- comment -%} Локация: само US ни интересува {%- endcomment -%}
+{% assign is_us = false %}
+{% if localization.country.iso_code == 'US' %}
+  {% assign is_us = true %}
+{% endif %}
+
+{%- comment -%}
+  Режими:
+  - нормален: "slider" или "marquee" от настройките
+  - "static_marquee": само за US, когато е включена отметката us_disable_marquee
+{%- endcomment -%}
+{% assign layout_mode = section.settings.layout %}
+{% if is_us and section.settings.us_disable_marquee %}
+  {% assign layout_mode = 'static_marquee' %}
+{% endif %}
+
+{%- assign marquee_time = 1.63 -%}
+
+{%- comment -%}
+  За static_marquee събираме трите части:
+  1) стандартният текст — първият text-блок
+  2) таймерът — първият countdown-блок
+  3) US текст — от същия text-блок (ако има text_us)
+{%- endcomment -%}
+{% assign static_std_text = '' %}
+{% assign static_countdown = '' %}
+{% assign static_us_text = '' %}
+{% assign std_text_captured = false %}
+{% assign countdown_captured = false %}
+
 {%- for block in section.blocks -%}
   {%- liquid
     assign classes = 'announcement__slide'
@@ -52,11 +82,6 @@
     if block.settings.show_wheel == false
       assign show_wheel = false
     endif
-
-    comment
-      100px going to move for 1.63s
-    endcomment
-    assign marquee_time = 1.63
 
     if section.settings.layout == 'slider'
       assign classes = classes | append: ' announcement__bar'
@@ -145,28 +170,39 @@
                 {{ block.settings.text | replace: '|', '<span class="announcement__divider"></span>' }}
               {%- endif -%}
 
+              {%- comment -%} захранваме static_marquee частите (само за US) {%- endcomment -%}
+              {%- if layout_mode == 'static_marquee' -%}
+                {%- if std_text_captured == false and block.settings.text != blank -%}
+                  {%- capture static_std_text -%}
+                    <span class="announcement__slide">
+                      <div class="{{ font_class }}">{{ block.settings.text | replace: '|', '<span class="announcement__divider"></span>' }}</div>
+                    </span>
+                  {%- endcapture -%}
+                  {% assign std_text_captured = true %}
+                {%- endif -%}
+                {%- if is_us and block.settings.text_us != blank -%}
+                  {%- capture static_us_text -%}
+                    <span class="announcement__slide">
+                      <div class="{{ font_class }}">{{ block.settings.text_us | replace: '|', '<span class="announcement__divider"></span>' }}</div>
+                    </span>
+                  {%- endcapture -%}
+                {%- endif -%}
+              {%- endif -%}
+
             {%- when 'message' -%}
               {%- if block.settings.message -%}
-                {% comment %} Free shipping {% endcomment %}
-
 {%- liquid
   assign free_shipping_text = block.settings.message | default: section.settings.message
   assign show_message = false
-
   if free_shipping_text != blank
     assign show_message = true
   endif
-
   assign free_shipping_limit = settings.free_shipping_limit
   assign free_shipping_gradient = block.settings.free_shipping_gradient | default: section.settings.free_shipping_gradient
 -%}
 
 {% if free_shipping_gradient != blank %}
-  {% style %}
-    :root {
-      --FREE-SHIPPING-GRADIENT: {{ free_shipping_gradient }};
-    }
-  {% endstyle %}
+  {% style %}:root { --FREE-SHIPPING-GRADIENT: {{ free_shipping_gradient }}; }{% endstyle %}
 {% endif %}
 
 {%- if show_message -%}
@@ -181,6 +217,9 @@
       assign limit_currency = limit_currency | minus: cart.total_price | money_with_currency
     else
       assign limit_currency = limit_currency | minus: cart.total_price | money_without_trailing_zeros
+      if localization.country.iso_code == 'CA' or localization.country.iso_code == 'AU'
+        assign limit_currency = limit_currency | minus: cart.total_price | money_with_currency
+      endif
     endif
 
     capture left_to_spend
@@ -194,13 +233,10 @@
       if is_cart_drawer
         echo 'drawer__message '
       endif
-
       if template.name == 'cart'
         echo 'cart__message '
       endif
-
       echo 'free-shipping'
-
       if subtotal_without_currency >= limit and qualified_shipping_message != blank
         echo ' is-success'
       endif
@@ -209,40 +245,10 @@
 
   <div class="{{ free_shipping_classes }}"
     data-free-shipping="{% if qualified_shipping_message != blank %}true{% else %}false{% endif %}"
-    data-free-shipping-limit="{{ limit }}"
-  >
-    {%- if show_wheel -%}
-      <div class="free-shipping__graph" data-progress-graph style="--stroke-dashoffset: 87.96459430051421;">
-        <svg height="18" width="18" viewBox="0 0 18 18">
-          <circle r="7" cx="9" cy="9" />
-          <circle class="free-shipping__graph-progress" stroke-dasharray="87.96459430051421 87.96459430051421" r="7" cx="9" cy="9" />
-        </svg>
-      </div>
-    {%- endif -%}
-
-    {%- if qualified_shipping_message != blank -%}
-      <span class="free-shipping__success-message">{{ qualified_shipping_message }}</span>
-    {%- endif -%}
-
-    <span class="free-shipping__default-message">
-      {{ free_shipping_message }}
-    </span>
-
-    {%- if show_progress_bar -%}
-      <progress class="free-shipping__progress-bar" data-progress-bar value="{{ percent }}" max="100"></progress>
-    {%- endif -%}
-
-    <div class="confetti">
-      <span class="confetti__dot confetti__dot--1"></span>
-      <span class="confetti__dot confetti__dot--2"></span>
-      <span class="confetti__dot confetti__dot--3"></span>
-      <span class="confetti__dot confetti__dot--4"></span>
-      <span class="confetti__dot confetti__dot--5"></span>
-      <span class="confetti__dot confetti__dot--6"></span>
-    </div>
+    data-free-shipping-limit="{{ limit }}">
+    <span class="free-shipping__default-message">{{ free_shipping_message }}</span>
   </div>
 {%- endif -%}
-
               {%- endif -%}
 
             {%- when 'code' -%}
@@ -266,61 +272,86 @@
                     end_time: block.settings.end_time,
                     period: block.settings.period,
                     end_message: block.settings.end_message,
-                    hide_on_complete: block.settings.hide_on_complete,
+                    hide_on_complete: block.settings.hide_on_complete
                   -%}
                 </div>
               </div>
 
+              {%- if layout_mode == 'static_marquee' and countdown_captured == false -%}
+                {%- capture static_countdown -%}
+                  <span class="announcement__slide">
+                    <div class="{{ font_class }}">
+                      <div class="countdown-block">
+                        <div class="countdown-block__text">
+                          {%- if block.settings.text != blank -%}
+                            {{ block.settings.text }}
+                          {%- endif -%}
+                        </div>
+                        <div class="countdown-block__timer">
+                          {%- render 'countdown-timer',
+                            text_size_desktop: 1,
+                            text_size_mobile: 1,
+                            end_date: block.settings.end_date,
+                            end_time: block.settings.end_time,
+                            period: block.settings.period,
+                            end_message: block.settings.end_message,
+                            hide_on_complete: block.settings.hide_on_complete
+                          -%}
+                        </div>
+                      </div>
+                    </div>
+                  </span>
+                {%- endcapture -%}
+                {% assign countdown_captured = true %}
+              {%- endif -%}
           {%- endcase -%}
         </div>
       {%- endif -%}
     {%- endcapture -%}
 
-    {%- capture bar_html -%}
-      {%- if section.settings.layout == 'marquee' -%}
-        <div class="announcement__slide{{ target_device_class }}" style="{{ block_style }}" {{ block.shopify_attributes }}>
-          {{ block_content }}
-        </div>
-      {%- else -%}
-        <ticker-bar style="{{ block_style }}" {{ block_attributes }}>
-          <div data-ticker-frame class="announcement__message">
-            <div data-ticker-scale class="announcement__scale ticker--unloaded">
-              {%- if block.type == 'image' -%}
-                {{ block_content }}
-              {%- else -%}
-                <div data-ticker-text class="announcement__text">
-                  {{ block_content }}
-                </div>
-              {%- endif -%}
-            </div>
+    {%- comment -%} Нормален markup (slider/marquee) — за всички освен static_marquee {%- endcomment -%}
+    {%- if layout_mode != 'static_marquee' -%}
+      {%- capture bar_html -%}
+        {%- if section.settings.layout == 'marquee' -%}
+          <div class="announcement__slide{{ target_device_class }}" style="{{ block_style }}" {{ block.shopify_attributes }}>
+            {{ block_content }}
           </div>
-        </ticker-bar>
-      {%- endif -%}
-    {%- endcapture -%}
-
-    {%- assign bar_markup = bar_markup | append: bar_html -%}
+        {%- else -%}
+          <ticker-bar style="{{ block_style }}" {{ block_attributes }}>
+            <div data-ticker-frame class="announcement__message">
+              <div data-ticker-scale class="announcement__scale ticker--unloaded">
+                {%- if block.type == 'image' -%}
+                  {{ block_content }}
+                {%- else -%}
+                  <div data-ticker-text class="announcement__text">
+                    {{ block_content }}
+                  </div>
+                {%- endif -%}
+              </div>
+            </div>
+          </ticker-bar>
+        {%- endif -%}
+      {%- endcapture -%}
+      {%- assign bar_markup = bar_markup | append: bar_html -%}
+    {%- endif -%}
   {%- endif -%}
 {%- endfor -%}
 
 {%- capture style -%}
   --PT: {{ padding_top }}px;
   --PB: {{ padding_bottom }}px;
-
   --ticker-direction: {{ section.settings.direction | default: 'ticker-rtl' }};
-
   {%- unless bg_color == 'rgba(0,0,0,0)' or bg_color == blank -%}
     --bg: {{ bg_color }};
     --bg-transparent: {{ bg_color | color_modify: 'alpha', 0 }};
   {%- else -%}
     --bg: transparent;
   {%- endunless -%}
-
   {%- unless text_color == 'rgba(0,0,0,0)' or text_color == blank -%}
     --text: {{ text_color }};
     --link: {{ text_color }};
     --link-hover: {{ text_color }};
   {%- endunless -%}
-
   --text-size: var(--font-{{ text_size }});
   --text-align: {{ text_align }};
   --justify-content: {{ justify_content }};
@@ -346,6 +377,51 @@
   {%- endstyle -%}
 {%- endif -%}
 
+{%- if layout_mode == 'static_marquee' -%}
+<style>
+  /* Само мобилни */
+  @media (max-width: 768px) {
+    /* родителят става flex box, за да центрира съдържанието */
+    [data-us-static] {
+      white-space: normal !important;
+      display: flex;
+      align-items: center;       /* център вертикално */
+      justify-content: center;   /* център хоризонтално */
+      min-height: var(--ANNOUNCEMENT-HEIGHT-MOBILE, 36px); /* запазва височина */
+    }
+    .announcement__bar { justify-content: center; }
+    .countdown-block { gap: 0; }
+    /* всички slide-ове се скриват по default */
+    [data-us-static] .announcement__slide {
+      display: none;
+      flex-shrink: 0;
+      text-align: center;
+      width: 100%;
+    }
+
+    /* активният се показва като flex item и се центрира */
+    [data-us-static] .announcement__slide.is-active {
+      display: block;
+    }
+
+    /* допълнителна центровка за вътрешния div */
+    [data-us-static] .announcement__slide > div {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* countdown блока също центриран */
+    [data-us-static] .countdown-block {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+</style>
+{%- endif -%}
+
 <div id="Announcement--{{ section.id }}"
   class="announcement__wrapper{% if is_top %} announcement__wrapper--top{% else %} section-padding{% endif %}{% if show_border %} announcement__wrapper--borders{% endif %}"
   data-announcement-wrapper
@@ -369,41 +445,54 @@
   {%- endif -%}
 
   {%- if section.blocks.size > 0 -%}
-    {%- if bar_markup != blank -%}
-      <announcement-bar class="announcement__bar-outer"
-        style="--padding-scrolling: {{ section.settings.message_spacing }}px;">
-        {%- if section.settings.layout == 'slider' -%}
-
-          <div class="announcement__bar-holder announcement__bar-holder--slider{% if show_arrows and section.blocks.size > 1 %} announcement__bar-holder--arrows{% endif %}">
-            <div class="announcement__slider"
-              data-slider
-              data-options='{"fade": true, "pageDots": false, "adaptiveHeight": false, "autoPlay": {{ section.settings.slider_speed | times: 1000 }}, "prevNextButtons": {{ show_arrows }}, "draggable": ">1"}'>
-              {{ bar_markup }}
-            </div>
-          </div>
-        {%- endif -%}
-
-        {%- if section.settings.layout == 'marquee' -%}
-          <div class="announcement__bar-holder announcement__bar-holder--marquee">
-            <div class="announcement__bar">
-
-              {%- comment -%}
-                The "autoplay" attribute forces ticker to start playing by cloning its text elements 10 times
-              {%- endcomment -%}
-
-              <ticker-bar autoplay speed="{{ 100.0 | divided_by: section.settings.marquee_speed | times: marquee_time }}">
-                <div data-ticker-frame class="announcement__message">
-                  <div data-ticker-scale class="announcement__scale ticker--unloaded">
-                    <div data-ticker-text class="announcement__text">
-                      {{ bar_markup }}
-                    </div>
+    {%- if layout_mode == 'static_marquee' -%}
+      {%- comment -%} Статичен marquee само за US: стандартен → таймер → US {%- endcomment -%}
+      <announcement-bar class="announcement__bar-outer" style="--padding-scrolling: {{ section.settings.message_spacing }}px;">
+        <div class="announcement__bar-holder announcement__bar-holder--marquee">
+          <div class="announcement__bar">
+            <ticker-bar>
+              <div data-ticker-frame class="announcement__message">
+                <div data-ticker-scale class="announcement__scale ticker--unloaded">
+                  <div data-ticker-text class="announcement__text" data-us-static style="white-space: nowrap;">
+                    {{ static_std_text }}{{ static_countdown }}{{ static_us_text }}
                   </div>
                 </div>
-              </ticker-bar>
-            </div>
+              </div>
+            </ticker-bar>
           </div>
-        {%- endif -%}
+        </div>
       </announcement-bar>
+    {%- else -%}
+      {%- if bar_markup != blank -%}
+        <announcement-bar class="announcement__bar-outer"
+          style="--padding-scrolling: {{ section.settings.message_spacing }}px;">
+          {%- if section.settings.layout == 'slider' -%}
+            <div class="announcement__bar-holder announcement__bar-holder--slider{% if show_arrows and section.blocks.size > 1 %} announcement__bar-holder--arrows{% endif %}">
+              <div class="announcement__slider"
+                data-slider
+                data-options='{"fade": true, "pageDots": false, "adaptiveHeight": false, "autoPlay": {{ section.settings.slider_speed | times: 1000 }}, "prevNextButtons": {{ show_arrows }}, "draggable": ">1"}'>
+                {{ bar_markup }}
+              </div>
+            </div>
+          {%- endif -%}
+
+          {%- if section.settings.layout == 'marquee' -%}
+            <div class="announcement__bar-holder announcement__bar-holder--marquee">
+              <div class="announcement__bar">
+                <ticker-bar autoplay speed="{{ 100.0 | divided_by: section.settings.marquee_speed | times: marquee_time }}">
+                  <div data-ticker-frame class="announcement__message">
+                    <div data-ticker-scale class="announcement__scale ticker--unloaded">
+                      <div data-ticker-text class="announcement__text">
+                        {{ bar_markup }}
+                      </div>
+                    </div>
+                  </div>
+                </ticker-bar>
+              </div>
+            </div>
+          {%- endif -%}
+        </announcement-bar>
+      {%- endif -%}
     {%- endif -%}
   {%- elsif is_top == false -%}
     {%- render 'no-blocks' -%}
@@ -420,3 +509,60 @@
     });
   </script>
 {%- endif -%}
+{%- if layout_mode == 'static_marquee' -%}
+<script>
+  (function() {
+    var root = document.querySelector('#Announcement--{{ section.id }} [data-us-static]');
+    if (!root) return;
+
+    var slides = Array.prototype.slice.call(root.querySelectorAll('.announcement__slide'));
+    if (slides.length <= 1) return;
+
+    var period = 3000; // 3 секунди; промени ако желаеш
+    var mq = window.matchMedia('(max-width: 768px)');
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+    var timer = null, i = 0;
+
+    function show(index) {
+      slides.forEach(function(s){ s.classList.remove('is-active'); });
+      slides[index].classList.add('is-active');
+    }
+
+    function start() {
+      if (!mq.matches || reduce.matches) { // извън мобилни или ако потребителят не иска анимации
+        // покажи всички едновременно
+        slides.forEach(function(s){ s.classList.add('is-active'); });
+        stop();
+        return;
+      }
+      stop();
+      i = 0;
+      show(i);
+      timer = setInterval(function(){
+        i = (i + 1) % slides.length;
+        show(i);
+      }, period);
+    }
+
+    function stop() {
+      if (timer) { clearInterval(timer); timer = null; }
+    }
+
+    // първоначално
+    start();
+
+    // смяна при resize / media query
+    if (mq.addEventListener) {
+      mq.addEventListener('change', function(e){ e.matches ? start() : start(); });
+    } else {
+      mq.addListener(function(e){ e.matches ? start() : start(); });
+    }
+
+    // пауза, когато табът е във фон
+    document.addEventListener('visibilitychange', function(){
+      if (document.hidden) { stop(); } else { start(); }
+    });
+  })();
+</script>
+{%- endif -%}
+
