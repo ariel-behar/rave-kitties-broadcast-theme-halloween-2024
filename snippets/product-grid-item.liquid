@@ -587,6 +587,9 @@
     <span class="sold-out">{{ 'products.product.sold_out' | t }}</span>
   {% endif %}
 </span>
+
+<div class="loox-rating" data-id="{{ product.id }}" data-rating="{{ product.metafields.loox.avg_rating }}" data-raters="{{ product.metafields.loox.num_reviews }}"></div>
+
 {% if current_variant.unit_price %}
   {% capture unit_price_separator %}
     <span aria-hidden="true">/</span>
