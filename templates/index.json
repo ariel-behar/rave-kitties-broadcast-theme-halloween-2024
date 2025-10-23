@@ -14,10 +14,10 @@
       "settings": {
         "height": "image-height",
         "width": "wrapper--full",
-        "image_1": "shopify://shop_images/ravekitty-desktop-banner.jpg",
+        "image_1": "shopify://shop_images/toTheRave08.11.24.jpg",
         "link": "shopify://collections/all-halloween",
         "mobile_height": "image-height--mobile",
-        "mobile_image": "shopify://shop_images/ravekitty-mobile-banner.jpg",
+        "mobile_image": "shopify://shop_images/toTheRave08.11.24_91c4f995-f14f-44f1-9bef-208e26882958.jpg",
         "flex_align_desktop": "align--middle-center-desktop",
         "flex_align_mobile": "align--middle-center-mobile",
         "overlay_opacity": 0,
