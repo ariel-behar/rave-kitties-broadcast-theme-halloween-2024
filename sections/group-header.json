@@ -67,7 +67,7 @@
         "show_country_name": true,
         "show_country_flag": false,
         "highlight_item": "RAVE",
-        "highlight_item_color": "#ffa500",
+        "highlight_item_color": "#ffffff",
         "transparent_home": false,
         "transparent_product_page": false,
         "transparent_collection": false,
