@@ -34,7 +34,7 @@
       "settings": {
         "show_border": false,
         "layout": "marquee",
-        "us_disable_marquee": true,
+        "us_disable_marquee": false,
         "slider_speed": 8,
         "text_alignment": "center",
         "show_arrows": false,
